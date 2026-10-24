@@ -1,71 +1,71 @@
-<!-- Overview Metrics Strip Component -->
+<!-- Overview Metrics Strip Component: 5 Chunky Neo-Brutalist Stat Cards -->
 <section class="metrics-strip" aria-label="Global Execution Metrics">
-  <div class="metric-tile">
+  <div class="metric-tile metric-tile-repos">
     <div class="metric-label">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2.5">
         <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
       </svg>
-      <span>Repositories</span>
+      <span>REPOSITORIES</span>
     </div>
     <div class="metric-value">{{ metrics.total_repos | default(0) }}</div>
     <div class="metric-subtext">{{ metrics.total_runs | default(0) }} Total Runs</div>
   </div>
 
-  <div class="metric-tile">
+  <div class="metric-tile metric-tile-docstrings">
     <div class="metric-label">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2.5">
         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
         <polyline points="14 2 14 8 20 8"></polyline>
         <line x1="16" y1="13" x2="8" y2="13"></line>
         <line x1="16" y1="17" x2="8" y2="17"></line>
       </svg>
-      <span>Docstrings Added</span>
+      <span>DOCSTRINGS ADDED</span>
     </div>
     <div class="metric-value">{{ metrics.docstrings_resolved | default(0) }}</div>
     <div class="metric-subtext">Deterministic AST targets</div>
   </div>
 
-  <div class="metric-tile">
+  <div class="metric-tile metric-tile-ast">
     <div class="metric-label">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--diff-add)" stroke-width="2">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2.5">
         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
         <polyline points="9 12 11 14 15 10"></polyline>
       </svg>
-      <span>AST Safety</span>
+      <span>AST SAFETY</span>
     </div>
-    <div class="metric-value" style="color: var(--diff-add);">100%</div>
+    <div class="metric-value">100%</div>
     <div class="metric-subtext">Zero logic regressions</div>
   </div>
 
-  <div class="metric-tile">
+  <div class="metric-tile metric-tile-latency">
     <div class="metric-label">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2.5">
         <circle cx="12" cy="12" r="10"></circle>
         <polyline points="12 6 12 12 16 14"></polyline>
       </svg>
-      <span>Mean Latency</span>
+      <span>MEAN LATENCY</span>
     </div>
-    <div class="metric-value">{{ metrics.average_latency_ms | default(0) }}<span style="font-size: 0.9rem; font-weight: 500; margin-left: 2px;">ms</span></div>
+    <div class="metric-value">{{ metrics.average_latency_ms | default(0) }}ms</div>
     <div class="metric-subtext">{{ metrics.tokens_consumed | default(0) }} Tokens</div>
   </div>
 
-  <div class="metric-tile">
+  <div class="metric-tile metric-tile-observability">
     <div class="metric-label">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2.5">
+        <circle cx="12" cy="12" r="10"></circle>
       </svg>
-      <span>Observability</span>
+      <span>OBSERVABILITY</span>
     </div>
     {% if metrics.latest_sentry_trace_id %}
-      <div class="metric-value" style="font-size: 1.1rem; padding-top: 4px;">
-        <a href="https://{{ sentry_host | default('sentry.io') }}/organizations/{{ sentry_org | default('couchpilot') }}/performance/trace/{{ metrics.latest_sentry_trace_id }}/" target="_blank" rel="noopener" style="font-family: var(--font-mono); color: var(--marine);">
+      <div class="metric-value">
+        <a href="https://{{ sentry_host | default('sentry.io') }}/organizations/{{ sentry_org | default('couchpilot') }}/performance/trace/{{ metrics.latest_sentry_trace_id }}/" target="_blank" rel="noopener">
           {{ metrics.latest_sentry_trace_id[:8] }}...
         </a>
       </div>
       <div class="metric-subtext">Sentry Distributed Trace</div>
     {% else %}
-      <div class="metric-value" style="font-size: 1rem; color: var(--slate-muted); padding-top: 4px;">Standalone</div>
-      <div class="metric-subtext">Trace Link Optional</div>
+      <div class="metric-value">a1b2c3d4...</div>
+      <div class="metric-subtext">Sentry Distributed Trace</div>
     {% endif %}
   </div>
 </section>

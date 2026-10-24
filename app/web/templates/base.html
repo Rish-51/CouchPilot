@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}CouchPilot Review Dashboard{% endblock %}</title>
 
-  <!-- Google Fonts: Outfit (UI Sans) & JetBrains Mono (Code/Metrics) -->
+  <!-- Google Fonts: Outfit (UI Sans, weights up to 900) & JetBrains Mono (Code/Metrics) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-  <!-- Core Stylesheet -->
+  <!-- Core Stylesheet: Bold High-Contrast Neo-Brutalism -->
   <link rel="stylesheet" href="/static/css/style.css">
 
   <!-- Lucide Icons CDN (pinned & deferred) -->
@@ -22,93 +22,96 @@
   <!-- Accessible Skip-to-Content Link -->
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
-  <!-- Header & Navigation -->
-  <header class="app-header">
-    <div class="header-container">
-      <div class="header-left">
-        <a href="/" class="brand-link" aria-label="CouchPilot Home">
-          <div class="brand-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-            </svg>
-          </div>
-          <span class="brand-title">CouchPilot</span>
-          <span class="brand-badge">Agent</span>
-        </a>
-
-        <nav class="nav-links" aria-label="Main Navigation">
-          <a href="/" class="nav-link {% if request.url.path == '/' %}active{% endif %}">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="3" y="3" width="7" height="7"></rect>
-              <rect x="14" y="3" width="7" height="7"></rect>
-              <rect x="14" y="14" width="7" height="7"></rect>
-              <rect x="3" y="14" width="7" height="7"></rect>
-            </svg>
-            <span>Overview</span>
+  <div class="app-shell">
+    <!-- Header & Navigation -->
+    <header class="app-header">
+      <div class="header-container">
+        <div class="header-left">
+          <a href="/" class="brand-link" aria-label="CouchPilot Home">
+            <div class="brand-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                <polyline points="2 17 12 22 22 17"></polyline>
+                <polyline points="2 12 12 17 22 12"></polyline>
+              </svg>
+            </div>
+            <span class="brand-title">CouchPilot</span>
           </a>
-          <a href="/runs" class="nav-link {% if request.url.path.startswith('/runs') %}active{% endif %}">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
-            </svg>
-            <span>Run History</span>
-          </a>
-        </nav>
-      </div>
 
-      <div class="header-actions">
-        <div class="service-status-pill" title="Render Service Healthy">
-          <span class="status-dot"></span>
-          <span>Render Live</span>
+          <nav class="nav-links" aria-label="Main Navigation">
+            <a href="/" class="nav-link {% if request.url.path == '/' %}active{% endif %}">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+              <span>Overview</span>
+            </a>
+            <a href="/runs" class="nav-link {% if request.url.path.startswith('/runs') %}active{% endif %}">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+              </svg>
+              <span>Run History</span>
+            </a>
+          </nav>
         </div>
 
-        <!-- Prominent Demo Run Button -->
-        <button id="demo-trigger-btn" class="btn btn-primary" onclick="triggerDemoRun()" title="Trigger autonomous replay run (Press 'd')">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="5 3 19 12 5 21 5 3"></polygon>
-          </svg>
-          <span>Demo Run</span>
-          <kbd class="kbd-hint" title="Shortcut key">d</kbd>
-        </button>
+        <div class="header-actions">
+          <div class="service-status-pill" title="Render Service Healthy">
+            <span class="status-dot"></span>
+            <span>Render Live</span>
+          </div>
+
+          <!-- Prominent Demo Run Button -->
+          <button id="demo-trigger-btn" class="btn btn-primary" onclick="triggerDemoRun()" title="Trigger autonomous replay run (Press 'd')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            <span>Demo Run</span>
+            <kbd class="kbd-hint" title="Shortcut key">d</kbd>
+          </button>
+        </div>
       </div>
-    </div>
-  </header>
+    </header>
 
-  <!-- Accessible Screen-Reader Live Region -->
-  <div id="sr-announcements" class="sr-only" role="status" aria-live="polite"></div>
+    <!-- Accessible Screen-Reader Live Region -->
+    <div id="sr-announcements" class="sr-only" role="status" aria-live="polite"></div>
 
-  <!-- Main Content Surface -->
-  <main class="main-wrapper" id="main-content" tabindex="-1">
-    {% block content %}{% endblock %}
-  </main>
+    <!-- Main Content Surface -->
+    <main class="main-wrapper" id="main-content" tabindex="-1">
+      {% block content %}{% endblock %}
+    </main>
 
-  <!-- Footer -->
-  <footer class="app-footer">
-    <div class="footer-content">
-      <p>CouchPilot autonomous repository housekeeping agent | Built for Hacktoberfest DEV Challenge</p>
-      <div class="footer-links">
-        <a href="/healthz" target="_blank">Health Probe</a>
-        <span>•</span>
-        <a href="/api/reports" target="_blank">Reports API</a>
+    <!-- Footer -->
+    <footer class="app-footer">
+      <div class="footer-content">
+        <p>CouchPilot autonomous repository housekeeping agent | Built for Hacktoberfest DEV Challenge</p>
+        <div class="footer-links">
+          <a href="/healthz" target="_blank">Health Probe</a>
+          <span>•</span>
+          <a href="/api/reports" target="_blank">Reports API</a>
+        </div>
       </div>
-    </div>
-  </footer>
+    </footer>
+  </div>
 
   <!-- Staged Demo Run Modal / Stepper Overlay -->
   <div id="demo-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
     <div class="demo-modal-card">
       <div class="modal-header">
         <h2 id="modal-title" class="modal-title">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--plum)" stroke-width="2.5">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="#000000" stroke-width="2">
             <polygon points="5 3 19 12 5 21 5 3"></polygon>
           </svg>
-          Autonomous Housekeeping Run
+          <span>Autonomous Housekeeping Run</span>
         </h2>
         <button type="button" class="copy-btn" onclick="closeDemoModal()" title="Close" aria-label="Close modal">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         </button>
       </div>
 
-      <p style="font-size: 0.88rem; color: var(--slate-muted);">
+      <p style="font-size: 0.95rem; font-weight: 600; color: #000000;">
         Executing sample repository housekeeping with strict AST equivalence validation and review branch isolation.
       </p>
 
