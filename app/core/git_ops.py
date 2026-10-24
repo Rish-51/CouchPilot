@@ -13,7 +13,10 @@ class GitManager:
 
     def __init__(self, repo_path: str) -> None:
         self.repo_path = os.path.abspath(repo_path)
-        self.repo = git.Repo(self.repo_path)
+        try:
+            self.repo = git.Repo(self.repo_path)
+        except git.InvalidGitRepositoryError:
+            self.repo = git.Repo(self.repo_path, search_parent_directories=True)
         self.worktree_dir: Optional[str] = None
         self.worktree_repo: Optional[git.Repo] = None
 
