@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}CouchPilot - Run {{ run.run_id }}{% endblock %}
+
+{% block content %}
+<section>
+  <header>
+    <h1>Run Detail: {{ run.run_id }}</h1>
+    <div>
+      {% with status=run.status %}
+        {% include "partials/status_badge.html" %}
+      {% endwith %}
+    </div>
+  </header>
+
+  <section>
+    <h2>Run Summary</h2>
+    <ul>
+      <li><strong>Repository:</strong> {{ run.repo_name }}</li>
+      <li><strong>Review Branch:</strong> <code>{{ run.branch_name }}</code></li>
+      <li><strong>Base Commit:</strong> <code>{{ run.base_commit }}</code></li>
+      <li><strong>Target Commit:</strong> <code>{{ run.target_commit or 'uncommitted' }}</code></li>
+      <li><strong>Targets Patched:</strong> {{ run.metrics.docstrings_added or 0 }} / {{ run.metrics.targets_found or 0 }}</li>
+      <li><strong>Tokens Consumed:</strong> {{ (run.metrics.tokens_prompt or 0) + (run.metrics.tokens_completion or 0) }}</li>
+      <li><strong>Duration:</strong> {{ run.metrics.duration_ms or 0 }} ms</li>
+      {% if run.sentry_trace_id %}
+        <li>
+          <strong>Sentry Trace:</strong>
+          <a href="https://{{ sentry_host }}/organizations/{{ sentry_org }}/performance/trace/{{ run.sentry_trace_id }}/" target="_blank" rel="noopener">
+            View Sentry Distributed Trace ({{ run.sentry_trace_id }})
+          </a>
+        </li>
+      {% endif %}
+    </ul>
+  </section>
+
+  <section>
+    <h2>File Verification Status</h2>
+    {% if run.files %}
+      <table>
+        <thead>
+          <tr>
+            <th>File</th>
+            <th>Status</th>
+            <th>Targets Detected</th>
+            <th>Targets Patched</th>
+            <th>AST Equivalence</th>
+            <th>Ruff Lint</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for f in run.files %}
+            <tr>
+              <td><code>{{ f.file_path }}</code></td>
+              <td>{{ f.status }}</td>
+              <td>{{ f.targets_detected }}</td>
+              <td>{{ f.targets_patched }}</td>
+              <td>{{ "Passed" if f.validation.ast_equivalent else "Failed" }}</td>
+              <td>{{ "Passed" if f.validation.ruff_check_passed else "Failed" }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No per-file records available.</p>
+    {% endif %}
+  </section>
+
+  {% include "partials/diff_viewer.html" %}
+</section>
+{% endblock %}

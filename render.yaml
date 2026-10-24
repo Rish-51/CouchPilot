@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: couchpilot-dashboard
+    runtime: python
+    region: oregon
+    plan: free
+    buildCommand: pip install --upgrade pip && pip install -r requirements-web.txt
+    startCommand: uvicorn app.web.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /healthz
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: COUCHPILOT_API_KEY
+        generateValue: true
+      - key: DEMO_MODE
+        value: replay
+      - key: DATABASE_PATH
+        value: couchpilot.db
+      - key: SENTRY_DSN
+        sync: false

@@ -1,0 +1,31 @@
+<section id="overview-metrics-bar">
+  <h2>Repository Metrics</h2>
+  <div>
+    <div>
+      <span>Repos Audited</span>
+      <strong>{{ metrics.total_repos }}</strong>
+    </div>
+    <div>
+      <span>Docstrings Resolved</span>
+      <strong>{{ metrics.docstrings_resolved }}</strong>
+    </div>
+    <div>
+      <span>Tokens Consumed</span>
+      <strong>{{ metrics.tokens_consumed }}</strong>
+    </div>
+    <div>
+      <span>Average Latency</span>
+      <strong>{{ metrics.average_latency_ms }} ms</strong>
+    </div>
+    <div>
+      <span>Latest Sentry Trace</span>
+      {% if metrics.latest_sentry_trace_id %}
+        <a href="https://{{ sentry_host }}/organizations/{{ sentry_org }}/performance/trace/{{ metrics.latest_sentry_trace_id }}/" target="_blank" rel="noopener">
+          {{ metrics.latest_sentry_trace_id[:8] }}...
+        </a>
+      {% else %}
+        <span>Not Configured</span>
+      {% endif %}
+    </div>
+  </div>
+</section>

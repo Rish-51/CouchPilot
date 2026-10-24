@@ -1,0 +1,61 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Environment variables and secrets
+.env
+.env.local
+.env.*.local
+
+# Databases and data storage
+*.sqlite
+*.sqlite3
+*.db
+/data/
+
+# IDE / Editor artifacts
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Coverage and testing
+.coverage
+htmlcov/
+.pytest_cache/
+.ruff_cache/
+
+# Impeccable worktrees and temporary runs
+.impeccable/worktrees/
+couchpilot_worktree_*/

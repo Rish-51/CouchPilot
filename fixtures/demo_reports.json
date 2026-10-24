@@ -1,0 +1,102 @@
+[
+  {
+    "run_id": "demo-run-001",
+    "workflow_id": "wf-replay-sample-01",
+    "repo_name": "sample_repo",
+    "branch_name": "couchpilot/tidy-20261024",
+    "base_commit": "e4a2c91b8d",
+    "target_commit": "7f8b901a3c",
+    "status": "completed",
+    "created_at": "2026-10-24T10:15:30Z",
+    "completed_at": "2026-10-24T10:16:02Z",
+    "metrics": {
+      "files_scanned": 3,
+      "files_modified": 3,
+      "targets_found": 15,
+      "docstrings_added": 15,
+      "type_hints_added": 22,
+      "tokens_prompt": 1420,
+      "tokens_completion": 890,
+      "duration_ms": 32000
+    },
+    "files": [
+      {
+        "file_path": "calculator.py",
+        "status": "applied",
+        "targets_detected": 6,
+        "targets_patched": 6,
+        "validation": {
+          "file_path": "calculator.py",
+          "syntax_valid": true,
+          "ast_equivalent": true,
+          "ruff_check_passed": true,
+          "ruff_format_passed": true,
+          "error_message": null,
+          "dropped_from_commit": false
+        },
+        "unified_diff": "--- a/calculator.py\n+++ b/calculator.py\n@@ -1,13 +1,18 @@\n-def add(a, b):\n+def add(a: float, b: float) -> float:\n+    \"\"\"Add two numbers and return the sum.\"\"\"\n     return a + b\n \n-def subtract(a, b):\n+def subtract(a: float, b: float) -> float:\n+    \"\"\"Subtract b from a and return the result.\"\"\"\n     return a - b\n"
+      },
+      {
+        "file_path": "user_service.py",
+        "status": "applied",
+        "targets_detected": 7,
+        "targets_patched": 7,
+        "validation": {
+          "file_path": "user_service.py",
+          "syntax_valid": true,
+          "ast_equivalent": true,
+          "ruff_check_passed": true,
+          "ruff_format_passed": true,
+          "error_message": null,
+          "dropped_from_commit": false
+        },
+        "unified_diff": "--- a/user_service.py\n+++ b/user_service.py\n@@ -1,5 +1,7 @@\n class UserService:\n+    \"\"\"Service managing user retrieval and session lifecycle.\"\"\"\n     def __init__(self, db_conn, cache_ttl=300):\n+        \"\"\"Initialize UserService with database connection and cache TTL.\"\"\"\n         self.db = db_conn\n"
+      }
+    ],
+    "unified_diff": "diff --git a/calculator.py b/calculator.py\n--- a/calculator.py\n+++ b/calculator.py\n@@ -1,13 +1,18 @@\n-def add(a, b):\n+def add(a: float, b: float) -> float:\n+    \"\"\"Add two numbers and return the sum.\"\"\"\n     return a + b\n \n-def subtract(a, b):\n+def subtract(a: float, b: float) -> float:\n+    \"\"\"Subtract b from a and return the result.\"\"\"\n     return a - b\n",
+    "sentry_trace_id": "a1b2c3d4e5f67890123456789abcdef0",
+    "error": null
+  },
+  {
+    "run_id": "demo-run-002",
+    "workflow_id": "wf-replay-sample-02",
+    "repo_name": "sample_repo",
+    "branch_name": "couchpilot/tidy-20261023",
+    "base_commit": "3c5f782a10",
+    "target_commit": "902d18b4e7",
+    "status": "partial",
+    "created_at": "2026-10-23T18:40:12Z",
+    "completed_at": "2026-10-23T18:40:55Z",
+    "metrics": {
+      "files_scanned": 4,
+      "files_modified": 3,
+      "targets_found": 12,
+      "docstrings_added": 10,
+      "type_hints_added": 14,
+      "tokens_prompt": 1200,
+      "tokens_completion": 750,
+      "duration_ms": 43000
+    },
+    "files": [
+      {
+        "file_path": "helpers.py",
+        "status": "applied",
+        "targets_detected": 2,
+        "targets_patched": 2,
+        "validation": {
+          "file_path": "helpers.py",
+          "syntax_valid": true,
+          "ast_equivalent": true,
+          "ruff_check_passed": true,
+          "ruff_format_passed": true,
+          "error_message": null,
+          "dropped_from_commit": false
+        },
+        "unified_diff": "--- a/helpers.py\n+++ b/helpers.py\n@@ -1,4 +1,6 @@\n-def format_timestamp(epoch_seconds):\n+def format_timestamp(epoch_seconds: float) -> str:\n+    \"\"\"Convert epoch seconds into ISO-8601 UTC string.\"\"\"\n"
+      }
+    ],
+    "unified_diff": "diff --git a/helpers.py b/helpers.py\n--- a/helpers.py\n+++ b/helpers.py\n@@ -1,4 +1,6 @@\n-def format_timestamp(epoch_seconds):\n+def format_timestamp(epoch_seconds: float) -> str:\n+    \"\"\"Convert epoch seconds into ISO-8601 UTC string.\"\"\"\n",
+    "sentry_trace_id": "f0e1d2c3b4a5968778695a4b3c2d1e0f",
+    "error": null
+  }
+]

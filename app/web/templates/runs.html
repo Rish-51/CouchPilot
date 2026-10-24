@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}CouchPilot - Run History{% endblock %}
+
+{% block content %}
+<section>
+  <h1>Run History</h1>
+
+  <div>
+    <form method="get" action="/runs">
+      <label for="status-filter">Status:</label>
+      <select id="status-filter" name="status">
+        <option value="">All</option>
+        <option value="completed" {% if active_status == "completed" %}selected{% endif %}>Completed</option>
+        <option value="partial" {% if active_status == "partial" %}selected{% endif %}>Partial</option>
+        <option value="failed" {% if active_status == "failed" %}selected{% endif %}>Failed</option>
+      </select>
+
+      <label for="repo-filter">Repository:</label>
+      <input id="repo-filter" type="text" name="repo" value="{{ active_repo or '' }}" placeholder="sample_repo">
+
+      <button type="submit">Filter</button>
+      <a href="/runs">Reset</a>
+    </form>
+  </div>
+
+  {% if runs %}
+    <table>
+      <thead>
+        <tr>
+          <th>Run ID</th>
+          <th>Repository</th>
+          <th>Review Branch</th>
+          <th>Status</th>
+          <th>Targets Patched</th>
+          <th>Tokens</th>
+          <th>Created</th>
+          <th>View</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for run in runs %}
+          <tr>
+            <td><code>{{ run.run_id }}</code></td>
+            <td>{{ run.repo_name }}</td>
+            <td><code>{{ run.branch_name }}</code></td>
+            <td>
+              {% with status=run.status %}
+                {% include "partials/status_badge.html" %}
+              {% endwith %}
+            </td>
+            <td>{{ run.metrics.docstrings_added or 0 }}</td>
+            <td>{{ (run.metrics.tokens_prompt or 0) + (run.metrics.tokens_completion or 0) }}</td>
+            <td>{{ run.created_at }}</td>
+            <td><a href="/runs/{{ run.run_id }}">Review Diff</a></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No runs matched your filter criteria.</p>
+  {% endif %}
+</section>
+{% endblock %}

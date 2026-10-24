@@ -1,0 +1,11 @@
+<section id="diff-viewer-component">
+  <h2>Unified Diff</h2>
+  <div>
+    <button type="button" onclick="toggleDiffView('unified')">Unified</button>
+    <button type="button" onclick="toggleDiffView('side-by-side')">Side-by-Side</button>
+  </div>
+
+  <div id="diff-output-container">
+    {{ diff_html | safe }}
+  </div>
+</section>

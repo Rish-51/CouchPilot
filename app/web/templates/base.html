@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}CouchPilot Review Dashboard{% endblock %}</title>
+  <!-- Unstyled base: styling and tokens to be configured in design workflow -->
+  {% block head %}{% endblock %}
+</head>
+<body>
+  <header>
+    <nav>
+      <strong>CouchPilot</strong>
+      <a href="/">Overview</a>
+      <a href="/runs">Runs</a>
+      <button id="demo-trigger-btn" onclick="triggerDemoRun()">Demo Run</button>
+    </nav>
+  </header>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>
+    <p>CouchPilot autonomous repository housekeeping agent | Built for Hacktoberfest DEV Challenge</p>
+  </footer>
+
+  <script>
+    async function triggerDemoRun() {
+      const btn = document.getElementById('demo-trigger-btn');
+      if (btn) btn.disabled = true;
+      try {
+        const res = await fetch('/api/demo-trigger', { method: 'POST' });
+        const data = await res.json();
+        if (data.run_id) {
+          window.location.href = '/runs/' + data.run_id;
+        } else {
+          alert('Demo run completed');
+        }
+      } catch (err) {
+        alert('Failed to trigger demo run: ' + err);
+      } finally {
+        if (btn) btn.disabled = false;
+      }
+    }
+  </script>
+</body>
+</html>
