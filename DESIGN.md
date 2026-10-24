@@ -14,6 +14,8 @@ colors:
   neutral-text: "#1F2A33"
   neutral-muted: "#55616B"
   neutral-border: "#E2DCCF"
+  neutral-border-hover: "#D3CCBE"
+  neutral-bg-dark: "#EDE8DE"
   status-warning: "#E67E22"
   status-warning-bg: "#FDF2E9"
   status-pending: "#F4D03F"
@@ -30,6 +32,12 @@ typography:
     fontWeight: 600
     lineHeight: 1.25
     letterSpacing: "-0.015em"
+  stat:
+    fontFamily: "Outfit, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+    fontSize: "1.5rem"
+    fontWeight: 700
+    lineHeight: 1.2
+    letterSpacing: "-0.01em"
   headline:
     fontFamily: "Outfit, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
     fontSize: "1.25rem"
@@ -48,11 +56,29 @@ typography:
     fontWeight: 400
     lineHeight: 1.5
     letterSpacing: "normal"
+  button:
+    fontFamily: "Outfit, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+    fontSize: "0.9rem"
+    fontWeight: 600
+    lineHeight: 1.2
+    letterSpacing: "normal"
   label:
     fontFamily: "JetBrains Mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace"
     fontSize: "0.85rem"
     fontWeight: 500
     lineHeight: 1.4
+    letterSpacing: "normal"
+  caption:
+    fontFamily: "Outfit, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+    fontSize: "0.75rem"
+    fontWeight: 600
+    lineHeight: 1.2
+    letterSpacing: "0.04em"
+  micro:
+    fontFamily: "JetBrains Mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace"
+    fontSize: "0.7rem"
+    fontWeight: 500
+    lineHeight: 1.2
     letterSpacing: "normal"
 rounded:
   sm: "4px"

@@ -55,10 +55,14 @@
     },
     "typographyMeta": {
       "display": { "displayName": "Display H1", "purpose": "Primary surface heading." },
+      "stat": { "displayName": "Stat Value", "purpose": "Prominent numerical statistics and counter values." },
       "headline": { "displayName": "Headline H2", "purpose": "Section headings and modal titles." },
       "title": { "displayName": "Title H3", "purpose": "Card titles and feed item identifiers." },
       "body": { "displayName": "Body", "purpose": "Primary interface narrative and audit copy." },
-      "label": { "displayName": "Label / Monospace", "purpose": "Commit SHAs, branch names, diff output, and metrics." }
+      "button": { "displayName": "Button / Action", "purpose": "Interactive buttons and controls." },
+      "label": { "displayName": "Label / Monospace", "purpose": "Commit SHAs, branch names, diff output, and metrics." },
+      "caption": { "displayName": "Caption / Badge", "purpose": "Status pills and auxiliary meta labels." },
+      "micro": { "displayName": "Micro / Line Numbers", "purpose": "Diff line numbers and keyboard shortcut hints." }
     },
     "shadows": [
       { "name": "ambient-low", "value": "0 1px 3px rgba(31, 42, 51, 0.05), 0 1px 2px rgba(31, 42, 51, 0.03)", "purpose": "Resting container depth." },

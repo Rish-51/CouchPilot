@@ -32,7 +32,7 @@
     <div style="display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: var(--space-md); margin-bottom: var(--space-md);">
       <div>
         <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
-          <h1 style="font-size: 1.5rem; font-weight: 700; color: var(--slate); font-family: var(--font-mono);">
+          <h1 class="text-display" style="font-family: var(--font-mono); color: var(--slate);">
             {{ run.run_id }}
           </h1>
           {% with status=run.status %}
@@ -49,13 +49,14 @@
             <button type="button" class="copy-btn" onclick="copyToClipboard('{{ run.branch_name }}', this)" title="Copy branch name">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
             </button>
+            <span class="kbd-hint" title="Press c to copy branch name">c</span>
           </span>
           <span>•</span>
           <span>Base: <code class="meta-code">{{ run.base_commit[:7] if run.base_commit else 'HEAD' }}</code> &rarr; Target: <code class="meta-code">{{ run.target_commit[:7] if run.target_commit else 'uncommitted' }}</code></span>
         </div>
       </div>
 
-      <div style="text-align: right; font-size: 0.8rem; color: var(--slate-muted);">
+      <div style="text-align: right; font-size: 0.85rem; color: var(--slate-muted);">
         <div>Created: <span style="font-family: var(--font-mono); color: var(--slate);">{{ run.created_at[:19].replace('T', ' ') if run.created_at else '' }}</span></div>
         {% if run.completed_at %}
           <div>Completed: <span style="font-family: var(--font-mono); color: var(--slate);">{{ run.completed_at[:19].replace('T', ' ') }}</span></div>
@@ -66,33 +67,33 @@
     <!-- Run Metrics Strip -->
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: var(--space-md); padding-top: var(--space-md); border-top: 1px solid var(--line);">
       <div>
-        <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--slate-muted); font-weight: 500;">Files Tidied</div>
-        <div style="font-size: 1.3rem; font-weight: 700; color: var(--slate); font-variant-numeric: tabular-nums;">
+        <div class="text-label" style="text-transform: uppercase; color: var(--slate-muted); font-weight: 500;">Files Tidied</div>
+        <div class="text-headline" style="font-weight: 700; color: var(--slate); font-variant-numeric: tabular-nums;">
           {{ run.metrics.files_modified | default(0) }} / {{ run.metrics.files_scanned | default(0) }}
         </div>
       </div>
       <div>
-        <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--slate-muted); font-weight: 500;">Docstrings Added</div>
-        <div style="font-size: 1.3rem; font-weight: 700; color: var(--slate); font-variant-numeric: tabular-nums;">
+        <div class="text-label" style="text-transform: uppercase; color: var(--slate-muted); font-weight: 500;">Docstrings Added</div>
+        <div class="text-headline" style="font-weight: 700; color: var(--slate); font-variant-numeric: tabular-nums;">
           {{ run.metrics.docstrings_added | default(0) }} / {{ run.metrics.targets_found | default(0) }}
         </div>
       </div>
       <div>
-        <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--slate-muted); font-weight: 500;">Type Hints</div>
-        <div style="font-size: 1.3rem; font-weight: 700; color: var(--slate); font-variant-numeric: tabular-nums;">
+        <div class="text-label" style="text-transform: uppercase; color: var(--slate-muted); font-weight: 500;">Type Hints</div>
+        <div class="text-headline" style="font-weight: 700; color: var(--slate); font-variant-numeric: tabular-nums;">
           {{ run.metrics.type_hints_added | default(0) }}
         </div>
       </div>
       <div>
-        <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--slate-muted); font-weight: 500;">Tokens Consumed</div>
-        <div style="font-size: 1.3rem; font-weight: 700; color: var(--slate); font-variant-numeric: tabular-nums;">
+        <div class="text-label" style="text-transform: uppercase; color: var(--slate-muted); font-weight: 500;">Tokens Consumed</div>
+        <div class="text-headline" style="font-weight: 700; color: var(--slate); font-variant-numeric: tabular-nums;">
           {{ (run.metrics.tokens_prompt | default(0)) + (run.metrics.tokens_completion | default(0)) }}
         </div>
       </div>
       <div>
-        <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--slate-muted); font-weight: 500;">Execution Time</div>
-        <div style="font-size: 1.3rem; font-weight: 700; color: var(--slate); font-variant-numeric: tabular-nums;">
-          {{ run.metrics.duration_ms | default(0) }}<span style="font-size: 0.8rem; font-weight: 500; margin-left: 2px;">ms</span>
+        <div class="text-label" style="text-transform: uppercase; color: var(--slate-muted); font-weight: 500;">Execution Time</div>
+        <div class="text-headline" style="font-weight: 700; color: var(--slate); font-variant-numeric: tabular-nums;">
+          {{ run.metrics.duration_ms | default(0) }}<span style="font-size: 0.85rem; font-weight: 500; margin-left: 2px;">ms</span>
         </div>
       </div>
     </div>
@@ -155,7 +156,7 @@
     {% if run.files and run.files | length > 0 %}
       <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.88rem;">
         <thead>
-          <tr style="background: #FAFAF8; border-bottom: 1px solid var(--line); color: var(--slate-muted); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em;">
+          <tr style="background: #FAFAF8; border-bottom: 1px solid var(--line); color: var(--slate-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em;">
             <th style="padding: 10px 16px;">File Path</th>
             <th style="padding: 10px 16px;">Status</th>
             <th style="padding: 10px 16px;">Targets Patched</th>

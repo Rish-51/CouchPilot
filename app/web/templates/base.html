@@ -13,12 +13,15 @@
   <!-- Core Stylesheet -->
   <link rel="stylesheet" href="/static/css/style.css">
 
-  <!-- Lucide Icons CDN -->
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Lucide Icons CDN (pinned & deferred) -->
+  <script defer src="https://unpkg.com/lucide@0.460.0"></script>
 
   {% block head %}{% endblock %}
 </head>
 <body>
+  <!-- Accessible Skip-to-Content Link -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
   <!-- Header & Navigation -->
   <header class="app-header">
     <div class="header-container">
@@ -59,18 +62,22 @@
         </div>
 
         <!-- Prominent Demo Run Button -->
-        <button id="demo-trigger-btn" class="btn btn-primary" onclick="triggerDemoRun()" title="Trigger autonomous replay run for judges">
+        <button id="demo-trigger-btn" class="btn btn-primary" onclick="triggerDemoRun()" title="Trigger autonomous replay run (Press 'd')">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <polygon points="5 3 19 12 5 21 5 3"></polygon>
           </svg>
           <span>Demo Run</span>
+          <kbd class="kbd-hint" title="Shortcut key">d</kbd>
         </button>
       </div>
     </div>
   </header>
 
+  <!-- Accessible Screen-Reader Live Region -->
+  <div id="sr-announcements" class="sr-only" role="status" aria-live="polite"></div>
+
   <!-- Main Content Surface -->
-  <main class="main-wrapper">
+  <main class="main-wrapper" id="main-content" tabindex="-1">
     {% block content %}{% endblock %}
   </main>
 
@@ -96,7 +103,7 @@
           </svg>
           Autonomous Housekeeping Run
         </h2>
-        <button type="button" class="copy-btn" onclick="closeDemoModal()" title="Close">
+        <button type="button" class="copy-btn" onclick="closeDemoModal()" title="Close" aria-label="Close modal">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         </button>
       </div>

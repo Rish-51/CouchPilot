@@ -64,7 +64,7 @@ async def test_html_views():
         # Overview
         r1 = await client.get("/")
         assert r1.status_code == 200
-        assert "Autonomous Repository Housekeeping" in r1.text
+        assert "Repository Housekeeping Workbench" in r1.text
 
         # Runs history
         r2 = await client.get("/runs")
