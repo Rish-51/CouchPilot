@@ -1,0 +1,206 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-24T20:07:00Z",
+  "title": "Design System: CouchPilot",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Imperial Plum",
+        "canonical": "#5B2C6F",
+        "tonalRamp": ["#2C1237", "#3E1B4D", "#4F2362", "#5B2C6F", "#783B92", "#9857B3", "#BE87D3", "#EAD4F4"]
+      },
+      "secondary": {
+        "role": "secondary",
+        "displayName": "Deep Marine",
+        "canonical": "#1B4F72",
+        "tonalRamp": ["#0B2435", "#10354D", "#154260", "#1B4F72", "#246896", "#3489BF", "#66AFDC", "#C2E3F7"]
+      },
+      "neutral-bg": {
+        "role": "neutral",
+        "displayName": "Warm Oat",
+        "canonical": "#F7F5F0",
+        "tonalRamp": ["#36332C", "#5C574B", "#857D6D", "#B3A995", "#D8D0C0", "#EAE4D7", "#F7F5F0", "#FDFDFB"]
+      },
+      "neutral-text": {
+        "role": "neutral",
+        "displayName": "Deep Slate",
+        "canonical": "#1F2A33",
+        "tonalRamp": ["#0E1418", "#172027", "#1F2A33", "#2E3D4A", "#425565", "#5F7486", "#879BAE", "#C8D5E1"]
+      },
+      "status-warning": {
+        "role": "warning",
+        "displayName": "Tangerine",
+        "canonical": "#E67E22",
+        "tonalRamp": ["#5E2E06", "#82400A", "#AA540F", "#D36A15", "#E67E22", "#F0A058", "#F6C18E", "#FDF2E9"]
+      },
+      "status-pending": {
+        "role": "pending",
+        "displayName": "Butter",
+        "canonical": "#F4D03F",
+        "tonalRamp": ["#5A4907", "#7D660B", "#A3850F", "#CBB01E", "#F4D03F", "#F7DE6E", "#F9ECA2", "#FEF9E7"]
+      },
+      "status-danger": {
+        "role": "danger",
+        "displayName": "Carmine Red",
+        "canonical": "#B83227",
+        "tonalRamp": ["#4D120D", "#6C1A14", "#8F231B", "#B83227", "#D4493D", "#E4776D", "#F0A8A1", "#FCEBEA"]
+      },
+      "diff-add": {
+        "role": "success",
+        "displayName": "Diff Add Green",
+        "canonical": "#236B3E",
+        "tonalRamp": ["#0E301B", "#144426", "#1B5731", "#236B3E", "#2E8D52", "#42B36D", "#76CE97", "#EBF5EE"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display H1", "purpose": "Primary surface heading." },
+      "headline": { "displayName": "Headline H2", "purpose": "Section headings and modal titles." },
+      "title": { "displayName": "Title H3", "purpose": "Card titles and feed item identifiers." },
+      "body": { "displayName": "Body", "purpose": "Primary interface narrative and audit copy." },
+      "label": { "displayName": "Label / Monospace", "purpose": "Commit SHAs, branch names, diff output, and metrics." }
+    },
+    "shadows": [
+      { "name": "ambient-low", "value": "0 1px 3px rgba(31, 42, 51, 0.05), 0 1px 2px rgba(31, 42, 51, 0.03)", "purpose": "Resting container depth." },
+      { "name": "elevation-md", "value": "0 4px 12px rgba(31, 42, 51, 0.07), 0 2px 4px rgba(31, 42, 51, 0.04)", "purpose": "Interactive hover state." },
+      { "name": "elevation-modal", "value": "0 12px 28px rgba(31, 42, 51, 0.12), 0 4px 8px rgba(31, 42, 51, 0.06)", "purpose": "Staged demo run modal depth." }
+    ],
+    "motion": [
+      { "name": "ease-standard", "value": "cubic-bezier(0.4, 0, 0.2, 1)", "purpose": "Default easing for state transitions." },
+      { "name": "duration-fast", "value": "0.15s", "purpose": "Snappy micro-interactions." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1440px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Primary deliberate action trigger (e.g. Demo Run).",
+      "html": "<button class=\"ds-btn-primary\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><polygon points=\"5 3 19 12 5 21 5 3\"></polygon></svg><span>Demo Run</span></button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: 'Outfit', sans-serif; font-size: 0.9rem; font-weight: 600; padding: 8px 16px; border-radius: 6px; background-color: #5B2C6F; color: #FFFFFF; border: none; cursor: pointer; transition: background-color 0.15s ease, transform 0.1s ease; line-height: 1.2; } .ds-btn-primary:hover { background-color: #4A235A; } .ds-btn-primary:active { transform: translateY(1px); } .ds-btn-primary:focus-visible { outline: 2px solid #5B2C6F; outline-offset: 2px; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Secondary navigational or inspection trigger.",
+      "html": "<button class=\"ds-btn-secondary\"><span>Review Diff</span></button>",
+      "css": ".ds-btn-secondary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: 'Outfit', sans-serif; font-size: 0.85rem; font-weight: 600; padding: 6px 12px; border-radius: 6px; background: #FFFFFF; color: #1F2A33; border: 1px solid #E2DCCF; cursor: pointer; transition: all 0.15s ease; line-height: 1.2; } .ds-btn-secondary:hover { background: #F7F5F0; border-color: #D3CCBE; } .ds-btn-secondary:focus-visible { outline: 2px solid #5B2C6F; outline-offset: 2px; }"
+    },
+    {
+      "name": "Filter Chip",
+      "kind": "chip",
+      "refersTo": "chip-filter",
+      "description": "Quick state filter chip for run history feeds.",
+      "html": "<button class=\"ds-filter-chip ds-active\">Completed</button>",
+      "css": ".ds-filter-chip { font-family: 'Outfit', sans-serif; font-size: 0.75rem; font-weight: 500; padding: 4px 10px; border-radius: 9999px; background: #F7F5F0; border: 1px solid #E2DCCF; color: #55616B; cursor: pointer; transition: all 0.15s ease; } .ds-filter-chip:hover { background: #EDE8DE; color: #1F2A33; } .ds-filter-chip.ds-active { background: #1B4F72; color: #FFFFFF; border-color: #1B4F72; font-weight: 600; }"
+    },
+    {
+      "name": "Status Badge",
+      "kind": "custom",
+      "refersTo": "status-badge-completed",
+      "description": "Contrast-compliant run status indicator.",
+      "html": "<span class=\"ds-status-badge ds-completed\"><svg width=\"11\" height=\"11\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\"><polyline points=\"20 6 9 17 4 12\"></polyline></svg><span>COMPLETED</span></span>",
+      "css": ".ds-status-badge { display: inline-flex; align-items: center; gap: 5px; font-family: 'Outfit', sans-serif; font-size: 0.75rem; font-weight: 600; padding: 3px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.04em; line-height: 1.2; } .ds-status-badge.ds-completed { background-color: #EBF5EE; color: #236B3E; border: 1px solid rgba(35, 107, 62, 0.25); } .ds-status-badge.ds-partial { background-color: #FDF2E9; color: #1F2A33; border: 1px solid rgba(230, 126, 34, 0.4); } .ds-status-badge.ds-pending { background-color: #FEF9E7; color: #1F2A33; border: 1px solid rgba(244, 208, 63, 0.5); } .ds-status-badge.ds-failed { background-color: #FCEBEA; color: #B83227; border: 1px solid rgba(184, 50, 39, 0.3); }"
+    },
+    {
+      "name": "AST Guarantee Certificate",
+      "kind": "card",
+      "refersTo": "ast-guarantee-card",
+      "description": "Trust banner certifying AST equivalence and zero functional regressions.",
+      "html": "<div class=\"ds-ast-card\"><div class=\"ds-ast-icon\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path d=\"M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z\"></path><polyline points=\"9 12 11 14 15 10\"></polyline></svg></div><div class=\"ds-ast-body\"><div class=\"ds-ast-title\">AST Equivalence Guarantee <span class=\"ds-ast-pill\">Verified Invariant</span></div><p class=\"ds-ast-desc\">Python stdlib ast parsed pre/post trees with docstrings and type annotations stripped. Both trees are 100% syntactically identical.</p></div></div>",
+      "css": ".ds-ast-card { display: flex; align-items: flex-start; gap: 12px; padding: 14px; background: #FAFAF7; border: 1px solid #E2DCCF; border-radius: 6px; font-family: 'Outfit', sans-serif; } .ds-ast-icon { width: 32px; height: 32px; background: #EBF5EE; color: #236B3E; border: 1px solid rgba(35, 107, 62, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; } .ds-ast-body { flex: 1; } .ds-ast-title { font-size: 0.92rem; font-weight: 600; color: #1F2A33; display: flex; align-items: center; gap: 8px; margin-bottom: 2px; } .ds-ast-pill { font-size: 0.68rem; font-weight: 700; color: #236B3E; background: #EBF5EE; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; } .ds-ast-desc { font-size: 0.82rem; color: #55616B; margin: 0; line-height: 1.4; }"
+    },
+    {
+      "name": "File Selector Tab",
+      "kind": "nav",
+      "refersTo": "file-tab",
+      "description": "Navigation tab for selecting altered file diffs.",
+      "html": "<button class=\"ds-file-tab ds-active\"><span>calculator.py</span><span class=\"ds-file-badge\">6/6</span></button>",
+      "css": ".ds-file-tab { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: #55616B; background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; transition: all 0.15s ease; } .ds-file-tab:hover { color: #1F2A33; background: rgba(31, 42, 51, 0.02); } .ds-file-tab.ds-active { color: #1B4F72; font-weight: 600; border-bottom-color: #1B4F72; background: #FFFFFF; } .ds-file-badge { font-size: 0.7rem; padding: 1px 5px; border-radius: 4px; background: #EBF3F9; color: #1B4F72; border: 1px solid rgba(27, 79, 114, 0.2); }"
+    },
+    {
+      "name": "Search Input",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "Workbench real-time filter input.",
+      "html": "<input class=\"ds-input-search\" type=\"text\" placeholder=\"Filter by repo or branch...\">",
+      "css": ".ds-input-search { width: 100%; box-sizing: border-box; font-family: 'Outfit', sans-serif; font-size: 0.85rem; padding: 6px 12px; border: 1px solid #E2DCCF; border-radius: 6px; background: #FFFFFF; color: #1F2A33; } .ds-input-search:focus { border-color: #5B2C6F; outline: none; box-shadow: 0 0 0 2px rgba(91, 44, 111, 0.15); }"
+    },
+    {
+      "name": "Diff Code Box",
+      "kind": "custom",
+      "refersTo": "diff-viewer-wrapper",
+      "description": "Pygments-styled syntax diff viewer container.",
+      "html": "<div class=\"ds-diff-box\"><pre class=\"ds-diff-pre\"><span class=\"ds-diff-hunk\">@@ -1,5 +1,7 @@</span>\n<span class=\"ds-diff-del\">-def calculate(x, y):</span>\n<span class=\"ds-diff-add\">+def calculate(x: float, y: float) -> float:</span>\n<span class=\"ds-diff-add\">+    \"\"\"Perform arithmetic calculation.\"\"\"</span></pre></div>",
+      "css": ".ds-diff-box { background: #FFFFFF; border: 1px solid #E2DCCF; border-radius: 6px; padding: 14px; font-family: 'JetBrains Mono', monospace; font-size: 0.84rem; line-height: 1.5; overflow-x: auto; } .ds-diff-pre { margin: 0; font-family: inherit; font-size: inherit; color: #1F2A33; white-space: pre; } .ds-diff-hunk { color: #1B4F72; font-weight: 600; display: block; background: rgba(27, 79, 114, 0.04); padding: 1px 4px; } .ds-diff-del { color: #B83227; background-color: #FCEBEA; display: block; padding: 1px 4px; } .ds-diff-add { color: #236B3E; background-color: #EBF5EE; font-weight: 500; display: block; padding: 1px 4px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Calibrated Avionics Bench",
+    "overview": "CouchPilot is an autonomous repository housekeeping agent with a review workbench engineered for high-trust code verification. The aesthetic philosophy is rooted in the calm, unembellished clarity of a precision laboratory instrument: dense yet immediately scanable, restrained, and completely devoid of decorative marketing tropes such as gradient text, artificial glassmorphism, or ambient neon halos.\n\nEvery visual decision reflects the solemnity of automated code modification: maintainers and judges must verify that default branches were protected and that zero functional regressions were introduced. Grounded on an unbleached oat substrate (#F7F5F0), deep slate typography (#1F2A33), and hairline architectural dividers (#E2DCCF), the system directs attention solely toward AST verification guarantees, review branches, and syntax-highlighted diffs.",
+    "keyCharacteristics": [
+      "Calm, High-Contrast Readability: Natural oat ground with tinted charcoal body text preserves focus during deep technical diff audits.",
+      "Strict AST-Equivalence Transparency: Verification status is treated as an immutable certificate of safety rather than an incidental badge.",
+      "Semantic Accent Discipline: Interactive triggers, operational statuses, and diff additions operate under distinct, non-overlapping color roles.",
+      "Zero Decorative Noise: Lucide SVG line icons with uniform 2px stroke width; strictly no raw emojis anywhere in the interface."
+    ],
+    "rules": [
+      {
+        "name": "The One Voice Rule",
+        "body": "Imperial Plum is reserved strictly for primary deliberate actions and focus rings, occupying <=5% of screen surface area. Its rarity guarantees immediate visual hierarchy.",
+        "section": "colors"
+      },
+      {
+        "name": "The Contrast Invariant Rule",
+        "body": "White text is strictly forbidden on Tangerine, Butter, and Red backgrounds. Badges in these states must use Deep Slate (#1F2A33) text on pale tinted backgrounds to satisfy WCAG AA contrast ratios.",
+        "section": "colors"
+      },
+      {
+        "name": "The No-Gradient Rule",
+        "body": "Plum and Marine must never be blended into a gradient. Each represents an independent semantic state (Deliberate Action vs Navigational/Operational Focus).",
+        "section": "colors"
+      },
+      {
+        "name": "The Monospace Honesty Rule",
+        "body": "Monospace typography is strictly reserved for code, AST nodes, git commit hashes, file paths, branch names, and tabular execution metrics. It must never be used as a decorative costume for general copy.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tabular Numbers Rule",
+        "body": "All numerical metrics, token counters, and elapsed time durations must declare font-variant-numeric: tabular-nums to eliminate layout jitter during live updates.",
+        "section": "typography"
+      },
+      {
+        "name": "The Zero-Halo Rule",
+        "body": "Soft colored glows and zero-blur hard block drop shadows are strictly prohibited. Shadows exist only to establish spatial elevation above the ground plane.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Hairline Discipline Rule",
+        "body": "Container borders must never exceed 1px. Thick decorative side-tab borders on list cards are strictly banned.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do use Outfit for UI interface copy and JetBrains Mono for commit hashes, paths, and diffs.",
+      "Do enforce WCAG AA contrast standards by using Deep Slate text on low-contrast status backgrounds (Tangerine and Butter).",
+      "Do render icons using Lucide SVG line icons with a consistent 2px stroke width.",
+      "Do format diff additions in #236B3E with #EBF5EE background, and deletions in #B83227 with #FCEBEA background.",
+      "Do display the AST Equivalence Guarantee prominently on all diff inspection views."
+    ],
+    "donts": [
+      "Don't use raw emojis anywhere in the UI, templates, logs, CLI output, or commit messages.",
+      "Don't combine Imperial Plum and Deep Marine into a gradient.",
+      "Don't use colored border-left accents thicker than 1px on list cards or table rows.",
+      "Don't put white text on yellow, orange, or red badges.",
+      "Don't add decorative blur, glow halos, or animations beyond functional state transitions."
+    ]
+  }
+}

@@ -1,64 +1,135 @@
 {% extends "base.html" %}
 
-{% block title %}CouchPilot - Run History{% endblock %}
+{% block title %}CouchPilot - Run History Feed{% endblock %}
 
 {% block content %}
-<section>
-  <h1>Run History</h1>
+<section style="margin-bottom: var(--space-lg);">
+  <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-md); margin-bottom: var(--space-md);">
+    <div>
+      <h1 style="font-size: 1.6rem; font-weight: 700; color: var(--slate); margin-bottom: 4px;">
+        Repository Housekeeping Runs
+      </h1>
+      <p style="color: var(--slate-muted); font-size: 0.95rem;">
+        Complete audit feed of autonomous housekeeping runs, isolated review branches, and verification results.
+      </p>
+    </div>
 
-  <div>
-    <form method="get" action="/runs">
-      <label for="status-filter">Status:</label>
-      <select id="status-filter" name="status">
-        <option value="">All</option>
-        <option value="completed" {% if active_status == "completed" %}selected{% endif %}>Completed</option>
-        <option value="partial" {% if active_status == "partial" %}selected{% endif %}>Partial</option>
-        <option value="failed" {% if active_status == "failed" %}selected{% endif %}>Failed</option>
-      </select>
+    <div>
+      <a href="/" class="btn btn-secondary btn-sm">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+        <span>Open Workbench</span>
+      </a>
+    </div>
+  </div>
 
-      <label for="repo-filter">Repository:</label>
-      <input id="repo-filter" type="text" name="repo" value="{{ active_repo or '' }}" placeholder="sample_repo">
+  <!-- Filter Card -->
+  <div style="background: #FFFFFF; border: 1px solid var(--line); border-radius: var(--radius-lg); padding: var(--space-md); margin-bottom: var(--space-lg); box-shadow: var(--shadow-sm);">
+    <form method="get" action="/runs" style="display: flex; align-items: center; flex-wrap: wrap; gap: var(--space-md);">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <label for="status-filter" style="font-size: 0.85rem; font-weight: 600; color: var(--slate-muted);">Status:</label>
+        <select id="status-filter" name="status" style="font-family: var(--font-sans); font-size: 0.85rem; padding: 6px 10px; border: 1px solid var(--line); border-radius: var(--radius-md); background: #FFFFFF; color: var(--slate);">
+          <option value="">All Statuses</option>
+          <option value="completed" {% if active_status == "completed" %}selected{% endif %}>Completed</option>
+          <option value="partial" {% if active_status == "partial" %}selected{% endif %}>Partial</option>
+          <option value="failed" {% if active_status == "failed" %}selected{% endif %}>Failed</option>
+        </select>
+      </div>
 
-      <button type="submit">Filter</button>
-      <a href="/runs">Reset</a>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <label for="repo-filter" style="font-size: 0.85rem; font-weight: 600; color: var(--slate-muted);">Repository:</label>
+        <input id="repo-filter" type="text" name="repo" value="{{ active_repo or '' }}" placeholder="e.g. sample_repo" style="font-family: var(--font-sans); font-size: 0.85rem; padding: 6px 10px; border: 1px solid var(--line); border-radius: var(--radius-md); background: #FFFFFF; color: var(--slate);">
+      </div>
+
+      <div style="display: flex; gap: 8px;">
+        <button type="submit" class="btn btn-secondary btn-sm">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <span>Apply Filter</span>
+        </button>
+
+        {% if active_status or active_repo %}
+          <a href="/runs" class="btn btn-secondary btn-sm" style="color: var(--slate-muted);">Reset</a>
+        {% endif %}
+      </div>
     </form>
   </div>
 
+  <!-- Runs Table or Empty State -->
   {% if runs %}
-    <table>
-      <thead>
-        <tr>
-          <th>Run ID</th>
-          <th>Repository</th>
-          <th>Review Branch</th>
-          <th>Status</th>
-          <th>Targets Patched</th>
-          <th>Tokens</th>
-          <th>Created</th>
-          <th>View</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for run in runs %}
-          <tr>
-            <td><code>{{ run.run_id }}</code></td>
-            <td>{{ run.repo_name }}</td>
-            <td><code>{{ run.branch_name }}</code></td>
-            <td>
-              {% with status=run.status %}
-                {% include "partials/status_badge.html" %}
-              {% endwith %}
-            </td>
-            <td>{{ run.metrics.docstrings_added or 0 }}</td>
-            <td>{{ (run.metrics.tokens_prompt or 0) + (run.metrics.tokens_completion or 0) }}</td>
-            <td>{{ run.created_at }}</td>
-            <td><a href="/runs/{{ run.run_id }}">Review Diff</a></td>
+    <div style="background: #FFFFFF; border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm);">
+      <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.88rem;">
+        <thead>
+          <tr style="background: #FAFAF8; border-bottom: 1px solid var(--line); color: var(--slate-muted); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em;">
+            <th style="padding: 12px 16px;">Run ID</th>
+            <th style="padding: 12px 16px;">Repository</th>
+            <th style="padding: 12px 16px;">Review Branch</th>
+            <th style="padding: 12px 16px;">Status</th>
+            <th style="padding: 12px 16px;">Docstrings Added</th>
+            <th style="padding: 12px 16px;">AST Safety</th>
+            <th style="padding: 12px 16px;">Created</th>
+            <th style="padding: 12px 16px; text-align: right;">Action</th>
           </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {% for r in runs %}
+            <tr style="border-bottom: 1px solid var(--line); transition: background 0.15s ease;">
+              <td style="padding: 14px 16px;">
+                <code style="font-weight: 600; color: var(--slate);">{{ r.run_id }}</code>
+              </td>
+              <td style="padding: 14px 16px; font-weight: 500;">
+                {{ r.repo_name }}
+              </td>
+              <td style="padding: 14px 16px;">
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  <code class="meta-code">{{ r.branch_name }}</code>
+                  <button type="button" class="copy-btn" onclick="copyToClipboard('{{ r.branch_name }}', this)" title="Copy branch name">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  </button>
+                </div>
+              </td>
+              <td style="padding: 14px 16px;">
+                {% with status=r.status %}
+                  {% include "partials/status_badge.html" %}
+                {% endwith %}
+              </td>
+              <td style="padding: 14px 16px; font-variant-numeric: tabular-nums;">
+                <strong>{{ r.metrics.docstrings_added | default(0) }}</strong>
+                <span style="color: var(--slate-muted); font-size: 0.8rem;">/ {{ r.metrics.targets_found | default(0) }}</span>
+              </td>
+              <td style="padding: 14px 16px;">
+                <span style="display: inline-flex; align-items: center; gap: 4px; color: var(--diff-add); font-size: 0.8rem; font-weight: 600;">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  Verified
+                </span>
+              </td>
+              <td style="padding: 14px 16px; color: var(--slate-muted); font-size: 0.8rem; font-variant-numeric: tabular-nums;">
+                {{ r.created_at[:19].replace('T', ' ') if r.created_at else 'Unknown' }}
+              </td>
+              <td style="padding: 14px 16px; text-align: right;">
+                <a href="/runs/{{ r.run_id }}" class="btn btn-secondary btn-sm">
+                  <span>Inspect Diff</span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
   {% else %}
-    <p>No runs matched your filter criteria.</p>
+    <div class="empty-state">
+      <div class="empty-state-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      </div>
+      <h2 class="empty-state-title">No Runs Matched Your Filter</h2>
+      <p class="empty-state-desc">
+        There are no recorded housekeeping runs matching the criteria: <strong>{{ active_status or 'all' }}</strong> in <strong>{{ active_repo or 'all repositories' }}</strong>.
+      </p>
+      <div style="display: flex; gap: 8px;">
+        <a href="/runs" class="btn btn-secondary btn-sm">Clear Filters</a>
+        <button type="button" class="btn btn-primary btn-sm" onclick="triggerDemoRun()">Trigger Demo Run</button>
+      </div>
+    </div>
   {% endif %}
 </section>
 {% endblock %}

@@ -1,4 +1,15 @@
-{# Status badge partial #}
-<span class="status-badge status-{{ status }}">
-  {{ status | upper }}
+{# Status badge partial adhering strictly to contrast tokens in PRODUCT.md #}
+<span class="status-badge status-{{ status | default('completed') | lower }}">
+  {% if status == 'completed' %}
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+  {% elif status in ['partial', 'warning'] %}
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+  {% elif status in ['pending', 'queued'] %}
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+  {% elif status == 'running' %}
+    <span class="status-dot"></span>
+  {% elif status == 'failed' %}
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+  {% endif %}
+  <span>{{ status | default('completed') | upper }}</span>
 </span>

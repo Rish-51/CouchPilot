@@ -1,11 +1,47 @@
+<!-- Interactive Diff Viewer Component -->
 <section id="diff-viewer-component">
-  <h2>Unified Diff</h2>
-  <div>
-    <button type="button" onclick="toggleDiffView('unified')">Unified</button>
-    <button type="button" onclick="toggleDiffView('side-by-side')">Side-by-Side</button>
+  <div class="diff-toolbar">
+    <div class="diff-toolbar-title">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M16 3h5v5"></path>
+        <path d="M4 20L21 3"></path>
+        <path d="M21 16v5h-5"></path>
+        <path d="M15 15l6 6"></path>
+        <path d="M4 4l5 5"></path>
+      </svg>
+      <span>Unified Diff Inspection</span>
+    </div>
+
+    <div style="display: flex; gap: 8px;">
+      <button type="button" class="btn btn-secondary btn-sm" onclick="copyToClipboard(document.getElementById('raw-diff-source')?.innerText || '', this)" title="Copy unified diff">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+        <span>Copy Diff</span>
+      </button>
+    </div>
   </div>
 
-  <div id="diff-output-container">
-    {{ diff_html | safe }}
+  <div id="diff-content-area">
+    {% if diff_html %}
+      <div class="diff-output-box">
+        <div class="highlight">
+          {{ diff_html | safe }}
+        </div>
+      </div>
+      <!-- Hidden raw text for copy operations -->
+      <pre id="raw-diff-source" style="display: none;">{{ run.unified_diff if run else '' }}</pre>
+    {% else %}
+      <div class="empty-state">
+        <div class="empty-state-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+          </svg>
+        </div>
+        <div class="empty-state-title">No Diff Available</div>
+        <div class="empty-state-desc">This run produced no changes, ran in dry-run mode, or has not executed yet.</div>
+      </div>
+    {% endif %}
   </div>
 </section>

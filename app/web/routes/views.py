@@ -19,13 +19,17 @@ router = APIRouter(tags=["views"])
 async def view_overview(request: Request):
     """Overview dashboard view with metrics bar and latest runs."""
     metrics = await db.get_overview_metrics()
-    latest_runs = await db.get_reports(limit=5)
+    latest_runs = await db.get_reports(limit=20)
+    active_run = latest_runs[0] if latest_runs else None
+    diff_html = highlight_diff(active_run.get("unified_diff", "")) if active_run else ""
     return templates.TemplateResponse(
         request=request,
         name="overview.html",
         context={
             "metrics": metrics,
             "latest_runs": latest_runs,
+            "run": active_run,
+            "diff_html": diff_html,
             "sentry_host": config.SENTRY_HOST,
             "sentry_org": config.SENTRY_ORG,
         },
