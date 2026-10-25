@@ -12,12 +12,6 @@ CouchPilot automates maintenance on Python repositories without risking regressi
 - Live Workbench: [https://couchpilot-dashboard.onrender.com](https://couchpilot-dashboard.onrender.com)
 - Demo Video: [https://youtu.be/-AYGjQud_X8](https://youtu.be/-AYGjQud_X8)
 
-![CouchPilot Overview Dashboard](docs/screenshots/overview.png)
-*TODO: docs/screenshots/overview.png - Overview metrics bar and recent run feed*
-
-![Interactive Diff Viewer and Verification Certificate](docs/screenshots/diff_viewer.png)
-*TODO: docs/screenshots/diff_viewer.png - AST equivalence certificate and syntax-highlighted diff*
-
 To evaluate CouchPilot with zero setup, navigate to the live workbench and click **Demo Run** in the header navigation; the dashboard operates in replay mode by default, executing a pre-recorded four-stage run against the bundled `sample_repo/` fixture without incurring LLM charges or requiring background workers.
 
 ## How It Works
