@@ -55,9 +55,17 @@ async def view_runs_history(
     )
 
 
+import re
+
+RUN_ID_REGEX = re.compile(r"^[a-zA-Z0-9_\-]+$")
+
+
 @router.get("/runs/{run_id}", response_class=HTMLResponse)
 async def view_run_detail(request: Request, run_id: str):
     """Run detail page with Pygments syntax-highlighted diff viewer."""
+    if not RUN_ID_REGEX.match(run_id):
+        raise HTTPException(status_code=400, detail="Invalid run_id format")
+
     report = await db.get_report(run_id)
     if not report:
         raise HTTPException(status_code=404, detail="Run not found")

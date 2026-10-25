@@ -2,18 +2,25 @@
 from contextlib import asynccontextmanager
 import os
 from pathlib import Path
-from fastapi import FastAPI
+import logging
+from fastapi import FastAPI, Request
 from fastapi.middleware.gzip import GZipMiddleware
+from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 
 from app.web import db
+from app.web.config import config
 from app.web.routes.api import router as api_router
 from app.web.routes.views import router as views_router
+from app.web.security import SecurityHeadersMiddleware
+
+logger = logging.getLogger("couchpilot.web")
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Lifespan context manager: initialize SQLite DB and seed fixtures on startup."""
+    """Lifespan context manager: audit operational security, initialize SQLite DB and seed fixtures."""
+    config.audit_security()
     await db.init_db()
     yield
 
@@ -23,7 +30,12 @@ app = FastAPI(
     description="Autonomous repository housekeeping dashboard for Hacktoberfest DEV Challenge",
     version="0.1.0",
     lifespan=lifespan,
+    docs_url=None if config.IS_PRODUCTION else "/docs",
+    redoc_url=None if config.IS_PRODUCTION else "/redoc",
 )
+
+# Operational & Cloud Security: Defensive security headers, CSP, rate-limiting, and payload size bounds
+app.add_middleware(SecurityHeadersMiddleware)
 
 # Performance: Automatic GZip compression for responses > 500 bytes (reduces CSS/JS/HTML by 70-80%)
 app.add_middleware(GZipMiddleware, minimum_size=500)
@@ -36,6 +48,21 @@ async def add_performance_cache_headers(request, call_next):
     if request.url.path.startswith("/static/"):
         response.headers["Cache-Control"] = "public, max-age=3600, stale-while-revalidate=86400"
     return response
+
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    """Sanitize unhandled 500 exceptions to prevent internal system or traceback leaks in production."""
+    logger.exception("Unhandled server exception: %s", exc)
+    if config.IS_PRODUCTION:
+        return JSONResponse(
+            status_code=500,
+            content={"status": "error", "message": "An internal server error occurred. Telemetry has been recorded."},
+        )
+    return JSONResponse(
+        status_code=500,
+        content={"status": "error", "message": str(exc)},
+    )
 
 
 # Ensure static directories exist

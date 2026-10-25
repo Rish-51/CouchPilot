@@ -1,7 +1,9 @@
 """FastAPI REST API routes."""
-from datetime import datetime
+from datetime import datetime, timezone
 import json
 import os
+import re
+import secrets
 import uuid
 from typing import Any, Dict, List, Optional
 from fastapi import APIRouter, Header, HTTPException, Query, Request
@@ -13,10 +15,13 @@ from app.web import db
 
 router = APIRouter(prefix="/api", tags=["api"])
 
+# Regex for safe run_id format (alphanumeric, hyphens, underscores)
+RUN_ID_REGEX = re.compile(r"^[a-zA-Z0-9_\-]+$")
+
 
 def verify_api_key(x_couchpilot_key: Optional[str] = Header(None)) -> None:
-    """Enforce authentication on write endpoints."""
-    if not x_couchpilot_key or x_couchpilot_key != config.API_KEY:
+    """Enforce authentication on write endpoints using constant-time comparison to prevent timing leaks."""
+    if not x_couchpilot_key or not secrets.compare_digest(x_couchpilot_key, config.API_KEY):
         raise HTTPException(
             status_code=401,
             detail="Unauthorized: Invalid or missing X-CouchPilot-Key header"
@@ -32,8 +37,11 @@ async def receive_report(
     verify_api_key(x_couchpilot_key)
     if "run_id" not in report:
         report["run_id"] = str(uuid.uuid4())
+    elif not RUN_ID_REGEX.match(str(report["run_id"])):
+        raise HTTPException(status_code=400, detail="Invalid run_id format")
+
     if "created_at" not in report:
-        report["created_at"] = datetime.utcnow().isoformat()
+        report["created_at"] = datetime.now(timezone.utc).isoformat()
 
     await db.save_report(report)
     return {"status": "saved", "run_id": report["run_id"]}
@@ -54,6 +62,8 @@ async def list_reports(
 @router.get("/reports/{run_id}")
 async def get_report_detail(run_id: str):
     """Fetch complete detail for a single run including metrics and diff."""
+    if not RUN_ID_REGEX.match(run_id):
+        raise HTTPException(status_code=400, detail="Invalid run_id format")
     report = await db.get_report(run_id)
     if not report:
         raise HTTPException(status_code=404, detail=f"Run '{run_id}' not found")
