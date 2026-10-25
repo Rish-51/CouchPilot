@@ -32,7 +32,7 @@
     <div style="display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 16px;">
       <div>
         <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px; flex-wrap: wrap;">
-          <h1 class="text-display" style="font-family: var(--font-mono); color: var(--nb-black); font-size: 1.6rem;">
+          <h1 class="text-display" style="font-family: var(--font-mono); color: var(--nb-black); font-size: 1.75rem; text-wrap: balance;">
             {{ run.run_id }}
           </h1>
           {% with status=run.status %}
@@ -67,32 +67,32 @@
     <!-- Run Metrics Strip -->
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; padding-top: 16px; border-top: 2px solid #000000;">
       <div>
-        <div class="text-label" style="text-transform: uppercase; color: var(--nb-black); font-weight: 800; font-size: 0.78rem;">Files Tidied</div>
-        <div class="text-headline" style="font-weight: 900; color: var(--nb-black); font-size: 1.4rem; font-variant-numeric: tabular-nums;">
+        <div class="text-label" style="text-transform: uppercase; color: var(--nb-black); font-weight: 800; font-size: 0.75rem;">Files Tidied</div>
+        <div class="text-headline" style="font-weight: 900; color: var(--nb-black); font-size: 1.5rem; font-variant-numeric: tabular-nums;">
           {{ run.metrics.files_modified | default(0) }} / {{ run.metrics.files_scanned | default(0) }}
         </div>
       </div>
       <div>
-        <div class="text-label" style="text-transform: uppercase; color: var(--nb-black); font-weight: 800; font-size: 0.78rem;">Docstrings Added</div>
-        <div class="text-headline" style="font-weight: 900; color: var(--nb-black); font-size: 1.4rem; font-variant-numeric: tabular-nums;">
+        <div class="text-label" style="text-transform: uppercase; color: var(--nb-black); font-weight: 800; font-size: 0.75rem;">Docstrings Added</div>
+        <div class="text-headline" style="font-weight: 900; color: var(--nb-black); font-size: 1.5rem; font-variant-numeric: tabular-nums;">
           {{ run.metrics.docstrings_added | default(0) }} / {{ run.metrics.targets_found | default(0) }}
         </div>
       </div>
       <div>
-        <div class="text-label" style="text-transform: uppercase; color: var(--nb-black); font-weight: 800; font-size: 0.78rem;">Type Hints</div>
-        <div class="text-headline" style="font-weight: 900; color: var(--nb-black); font-size: 1.4rem; font-variant-numeric: tabular-nums;">
+        <div class="text-label" style="text-transform: uppercase; color: var(--nb-black); font-weight: 800; font-size: 0.75rem;">Type Hints</div>
+        <div class="text-headline" style="font-weight: 900; color: var(--nb-black); font-size: 1.5rem; font-variant-numeric: tabular-nums;">
           {{ run.metrics.type_hints_added | default(0) }}
         </div>
       </div>
       <div>
-        <div class="text-label" style="text-transform: uppercase; color: var(--nb-black); font-weight: 800; font-size: 0.78rem;">Tokens Consumed</div>
-        <div class="text-headline" style="font-weight: 900; color: var(--nb-black); font-size: 1.4rem; font-variant-numeric: tabular-nums;">
+        <div class="text-label" style="text-transform: uppercase; color: var(--nb-black); font-weight: 800; font-size: 0.75rem;">Tokens Consumed</div>
+        <div class="text-headline" style="font-weight: 900; color: var(--nb-black); font-size: 1.5rem; font-variant-numeric: tabular-nums;">
           {{ (run.metrics.tokens_prompt | default(0)) + (run.metrics.tokens_completion | default(0)) }}
         </div>
       </div>
       <div>
-        <div class="text-label" style="text-transform: uppercase; color: var(--nb-black); font-weight: 800; font-size: 0.78rem;">Execution Time</div>
-        <div class="text-headline" style="font-weight: 900; color: var(--nb-black); font-size: 1.4rem; font-variant-numeric: tabular-nums;">
+        <div class="text-label" style="text-transform: uppercase; color: var(--nb-black); font-weight: 800; font-size: 0.75rem;">Execution Time</div>
+        <div class="text-headline" style="font-weight: 900; color: var(--nb-black); font-size: 1.5rem; font-variant-numeric: tabular-nums;">
           {{ run.metrics.duration_ms | default(0) }}<span style="font-size: 0.85rem; font-weight: 700; margin-left: 2px;">ms</span>
         </div>
       </div>
@@ -149,7 +149,7 @@
   <!-- File Verification Table -->
   <section style="background: #FFFFFF; border: var(--nb-border); border-radius: var(--radius-card); overflow: hidden; margin-bottom: 20px; box-shadow: var(--nb-shadow-lg);">
     <div style="padding: 14px 20px; border-bottom: 2px solid #000000; background: var(--nb-yellow);">
-      <h2 style="font-size: 1.15rem; font-weight: 900; color: #000000; text-transform: uppercase;">File Verification Audit</h2>
+      <h2 style="font-size: 1.05rem; font-weight: 800; color: #000000; text-transform: uppercase; text-wrap: balance;">File Verification Audit</h2>
     </div>
 
     {% if run.files and run.files | length > 0 %}

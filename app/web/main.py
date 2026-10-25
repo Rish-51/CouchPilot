@@ -3,6 +3,7 @@ from contextlib import asynccontextmanager
 import os
 from pathlib import Path
 from fastapi import FastAPI
+from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.staticfiles import StaticFiles
 
 from app.web import db
@@ -23,6 +24,19 @@ app = FastAPI(
     version="0.1.0",
     lifespan=lifespan,
 )
+
+# Performance: Automatic GZip compression for responses > 500 bytes (reduces CSS/JS/HTML by 70-80%)
+app.add_middleware(GZipMiddleware, minimum_size=500)
+
+
+@app.middleware("http")
+async def add_performance_cache_headers(request, call_next):
+    """Add browser caching headers to static assets to prevent redundant downloads."""
+    response = await call_next(request)
+    if request.url.path.startswith("/static/"):
+        response.headers["Cache-Control"] = "public, max-age=3600, stale-while-revalidate=86400"
+    return response
+
 
 # Ensure static directories exist
 static_dir = Path(__file__).parent / "static"

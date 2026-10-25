@@ -23,9 +23,18 @@
   --nb-red: #EF4444;          /* Harsh red for failed runs & errors */
   --nb-red-bg: #FEE2E2;
 
-  /* Typography */
+  /* Typography Hierarchy Scale (DESIGN.md Tokens) */
   --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --text-display: 1.75rem;
+  --text-stat: 1.5rem;
+  --text-headline: 1.25rem;
+  --text-title: 1.05rem;
+  --text-body: 1rem;       /* 15px */
+  --text-btn: 0.9rem;
+  --text-label: 0.85rem;
+  --text-caption: 0.75rem;
+  --text-micro: 0.7rem;
 
   /* Strict Neo-Brutalist Borders & Shadows */
   --nb-border: 3px solid #000000;
@@ -135,34 +144,45 @@ h1, h2, h3, h4 {
   font-weight: 800;
   letter-spacing: -0.02em;
   margin-bottom: var(--space-xs);
+  text-wrap: balance;
 }
 
 h1, .text-display {
-  font-size: 1.8rem;
-  font-weight: 900;
-  line-height: 1.2;
+  font-size: var(--text-display, 1.75rem);
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
 }
 
 h2, .text-headline {
-  font-size: 1.35rem;
+  font-size: var(--text-headline, 1.25rem);
   font-weight: 800;
-  line-height: 1.3;
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
 }
 
 h3, .text-title {
-  font-size: 1.1rem;
+  font-size: var(--text-title, 1.05rem);
   font-weight: 800;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
 }
 
 p, .text-body {
   color: var(--nb-black);
-  font-size: 15px;
+  font-size: var(--text-body, 1rem);
   line-height: 1.5;
+  max-width: 68ch;
+  text-wrap: pretty;
 }
 
 code, pre, .text-label {
   font-family: var(--font-mono);
-  font-size: 0.85rem;
+  font-size: var(--text-label, 0.85rem);
+  font-variant-numeric: tabular-nums;
 }
 
 /* Accessibility: Visually hidden screen reader status */
@@ -193,6 +213,13 @@ code, pre, .text-label {
   box-shadow: 1px 1px 0px #000000;
   color: #000000;
   line-height: 1.2;
+  transition: transform 0.08s ease, background-color 0.08s ease, box-shadow 0.08s ease;
+}
+
+.kbd-hint.kbd-pressed {
+  transform: translate(1px, 1px) scale(0.96);
+  box-shadow: 0px 0px 0px #000000;
+  background: var(--nb-yellow-warm);
 }
 
 a {
@@ -265,10 +292,10 @@ a:hover {
 }
 
 .brand-title {
-  font-size: 1.65rem;
+  font-size: var(--text-display, 1.75rem);
   font-weight: 900;
   color: var(--nb-black);
-  letter-spacing: -0.03em;
+  letter-spacing: -0.025em;
 }
 
 .brand-badge {
@@ -344,6 +371,7 @@ a:hover {
   border: 2px solid #000000;
   border-radius: 50%;
   display: inline-block;
+  flex-shrink: 0;
 }
 
 /* Button System */
@@ -486,14 +514,14 @@ a:hover {
 }
 
 .metric-value {
-  font-size: 2.3rem;
-  font-weight: 900;
+  font-size: var(--text-stat, 1.5rem);
+  font-weight: 800;
   color: var(--nb-black) !important;
   font-variant-numeric: tabular-nums;
-  line-height: 1.1;
+  line-height: 1.2;
   margin-bottom: 4px;
   font-family: var(--font-sans);
-  letter-spacing: -0.03em;
+  letter-spacing: -0.01em;
   word-break: break-all;
 }
 
@@ -541,12 +569,13 @@ a:hover {
 }
 
 .feed-header-title {
-  font-size: 1.2rem;
+  font-size: var(--text-headline, 1.25rem);
   font-weight: 800;
   color: var(--nb-black);
   display: flex;
   align-items: center;
   gap: 8px;
+  text-wrap: balance;
 }
 
 .feed-header-title svg {
@@ -577,7 +606,7 @@ a:hover {
 }
 
 .filter-chip {
-  font-size: 0.8rem;
+  font-size: var(--text-label, 0.85rem);
   font-weight: 800;
   padding: 4px 12px;
   border-radius: var(--radius-pill);
@@ -655,8 +684,9 @@ a:hover {
   padding: 12px 14px;
   margin-bottom: 12px;
   cursor: pointer;
-  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  transition: transform 0.12s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.12s ease, background-color 0.12s ease;
   position: relative;
+  overflow: hidden;
 }
 
 .feed-item:hover {
@@ -667,7 +697,8 @@ a:hover {
 .feed-item.active {
   background: #FFFFFF;
   border: var(--nb-border);
-  box-shadow: var(--nb-shadow);
+  box-shadow: var(--nb-shadow-lg);
+  transform: translate(-2px, -2px);
 }
 
 .feed-item-top {
@@ -705,9 +736,10 @@ a:hover {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 0.8rem;
+  font-size: var(--text-caption, 0.75rem);
   font-weight: 700;
   color: var(--nb-black);
+  font-variant-numeric: tabular-nums;
 }
 
 .feed-item-metric {
@@ -809,9 +841,10 @@ a:hover {
 
 #active-run-id {
   font-family: var(--font-mono);
-  font-size: 1.4rem;
+  font-size: var(--text-headline, 1.25rem);
   font-weight: 800;
   color: var(--nb-black);
+  font-variant-numeric: tabular-nums;
 }
 
 .run-meta-row {
@@ -858,7 +891,8 @@ a:hover {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.1s ease;
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.15s ease;
+  position: relative;
 }
 
 .copy-btn:hover {
@@ -866,8 +900,53 @@ a:hover {
   box-shadow: none;
 }
 
+.copy-btn:active {
+  transform: translate(2px, 2px);
+}
+
+.copy-btn.copied {
+  background: #DCFCE7;
+  border-color: #16A34A;
+}
+
 .copy-btn svg {
   stroke-width: 2.5;
+}
+
+.copy-toast {
+  position: absolute;
+  bottom: calc(100% + 7px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: #000000;
+  color: #FFFFFF;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.25);
+  transition: transform 0.16s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.16s ease;
+  z-index: 50;
+}
+
+.copy-toast::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 4px;
+  border-style: solid;
+  border-color: #000000 transparent transparent transparent;
+}
+
+.copy-toast.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
 }
 
 /* AST Equivalence Guarantee Certificate Card */
@@ -906,14 +985,15 @@ a:hover {
 }
 
 .ast-badge-title {
-  font-size: 1.15rem;
-  font-weight: 900;
+  font-size: var(--text-title, 1.05rem);
+  font-weight: 800;
   color: var(--nb-black);
   display: flex;
   align-items: center;
   gap: 10px;
   margin-bottom: 4px;
   flex-wrap: wrap;
+  text-wrap: balance;
 }
 
 .ast-verified-pill {
@@ -1019,12 +1099,13 @@ a:hover {
 }
 
 .diff-toolbar-title {
-  font-size: 1.15rem;
+  font-size: var(--text-title, 1.05rem);
   font-weight: 800;
   color: var(--nb-black);
   display: flex;
   align-items: center;
   gap: 8px;
+  text-wrap: balance;
 }
 
 .diff-toolbar-title svg {
@@ -1126,17 +1207,19 @@ a:hover {
 }
 
 .empty-state-title {
-  font-size: 1.35rem;
-  font-weight: 900;
+  font-size: var(--text-headline, 1.25rem);
+  font-weight: 800;
   color: var(--nb-black);
+  text-wrap: balance;
 }
 
 .empty-state-desc {
-  max-width: 460px;
-  font-size: 0.95rem;
+  max-width: 58ch;
+  font-size: var(--text-body, 1rem);
   font-weight: 600;
   color: var(--nb-black);
   line-height: 1.5;
+  text-wrap: pretty;
 }
 
 /* Error Banner */
@@ -1163,8 +1246,9 @@ a:hover {
 .error-banner-title {
   font-weight: 800;
   color: #000000;
-  font-size: 1rem;
+  font-size: var(--text-title, 1.05rem);
   margin-bottom: 2px;
+  text-wrap: balance;
 }
 
 .error-banner-text {
@@ -1185,7 +1269,7 @@ a:hover {
   padding: var(--space-md);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.15s ease;
+  transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .modal-overlay.open {
@@ -1204,6 +1288,14 @@ a:hover {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  transform: scale(0.96) translateY(8px);
+  opacity: 0;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+}
+
+.modal-overlay.open .demo-modal-card {
+  transform: scale(1) translateY(0);
+  opacity: 1;
 }
 
 .modal-header {
@@ -1213,12 +1305,13 @@ a:hover {
 }
 
 .modal-title {
-  font-size: 1.35rem;
-  font-weight: 900;
+  font-size: var(--text-headline, 1.25rem);
+  font-weight: 800;
   color: var(--nb-black);
   display: flex;
   align-items: center;
   gap: 10px;
+  text-wrap: balance;
 }
 
 .stepper-list {
@@ -1229,21 +1322,36 @@ a:hover {
   position: relative;
 }
 
+/* Stepper Background Track & Dynamic Animated Progress Bar */
+.stepper-track {
+  position: absolute;
+  left: 17px;
+  top: 18px;
+  bottom: 24px;
+  width: 3px;
+  background: #E2DCCF;
+  border-radius: 2px;
+  z-index: 1;
+}
+
+.stepper-progress {
+  width: 100%;
+  height: 100%;
+  background: #000000;
+  border-radius: 2px;
+  transform-origin: top;
+  transform: scaleY(0);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
 .stepper-item {
   display: flex;
   align-items: flex-start;
   gap: 16px;
   position: relative;
-}
-
-.stepper-item:not(:last-child)::after {
-  content: "";
-  position: absolute;
-  left: 17px;
-  top: 36px;
-  bottom: -16px;
-  width: 3px;
-  background: #000000;
+  z-index: 2;
+  transition: transform 0.15s ease;
 }
 
 .stepper-icon-box {
@@ -1261,18 +1369,21 @@ a:hover {
   font-weight: 800;
   font-size: 0.95rem;
   z-index: 2;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .stepper-item.active .stepper-icon-box {
   background: var(--nb-purple);
   color: #FFFFFF;
   border-color: #000000;
+  animation: step-radar-pulse 1.6s ease-in-out infinite;
 }
 
 .stepper-item.completed .stepper-icon-box {
   background: var(--nb-green);
   color: #000000;
   border-color: #000000;
+  animation: check-pop-anim 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .stepper-content {
@@ -1280,10 +1391,20 @@ a:hover {
 }
 
 .stepper-title {
-  font-size: 1rem;
+  font-size: var(--text-title, 1.05rem);
   font-weight: 800;
   color: var(--nb-black);
   margin-bottom: 2px;
+  transition: color 0.2s ease;
+  text-wrap: balance;
+}
+
+.stepper-item.active .stepper-title {
+  color: var(--nb-purple-hover);
+}
+
+.stepper-item.ast-certified .stepper-title {
+  animation: ast-verified-flash 0.6s ease-out;
 }
 
 .stepper-desc {
@@ -1386,3 +1507,204 @@ tr:hover td {
     grid-template-columns: 1fr;
   }
 }
+
+/* ==========================================================================
+   Motion System: Keyframes, Transitions, Skeletons & Reduced Motion
+   ========================================================================== */
+
+/* 1. Focal Moment Animations */
+@keyframes step-radar-pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 2px 2px 0px #000000;
+  }
+  50% {
+    transform: scale(1.08);
+    box-shadow: 3px 3px 0px #000000;
+  }
+}
+
+@keyframes check-pop-anim {
+  0% {
+    transform: scale(0.65);
+    opacity: 0.5;
+  }
+  60% {
+    transform: scale(1.18);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes ast-verified-flash {
+  0% {
+    color: #16A34A;
+  }
+  100% {
+    color: var(--nb-black);
+  }
+}
+
+/* 2. Continuity & State Change */
+.diff-fade-in {
+  animation: diff-settle 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes diff-settle {
+  0% {
+    opacity: 0.2;
+    transform: translateY(3px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Skeleton Loading Pulse */
+.diff-skeleton-box {
+  padding: 24px;
+  background: var(--nb-grey-box);
+  border: var(--nb-border);
+  box-shadow: var(--nb-shadow);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.skeleton-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  color: var(--nb-black);
+}
+
+.skeleton-line {
+  height: 12px;
+  background: #D4D4CE;
+  border-radius: 4px;
+  animation: skeleton-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes skeleton-pulse {
+  0%, 100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+
+/* 3. Feedback Indicators */
+
+.ast-card-pulse {
+  animation: ast-card-sheen 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes ast-card-sheen {
+  0%, 100% {
+    transform: translate(0, 0);
+    box-shadow: var(--nb-shadow);
+  }
+  50% {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--nb-shadow-lg);
+  }
+}
+
+/* Feed filtering micro-states */
+.feed-item-shown {
+  animation: feed-item-enter 0.15s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes feed-item-enter {
+  0% {
+    opacity: 0.4;
+    transform: translateY(2px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 4. Accessibility & User Control: prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .demo-modal-card {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
+  .status-dot {
+    animation: none !important;
+  }
+
+  .copy-toast {
+    transform: translateX(-50%) translateY(0) !important;
+  }
+
+  .stepper-progress {
+    transition: none !important;
+  }
+
+  .diff-fade-in {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .skeleton-line {
+    animation: none !important;
+    opacity: 0.7 !important;
+  }
+
+  .feed-item.active {
+    transform: none !important;
+  }
+
+  .kbd-hint.kbd-pressed {
+    transform: none !important;
+  }
+}
+
+/* ==========================================================================
+   Performance Optimizations: CSS Containment & Off-screen Deferral
+   ========================================================================== */
+
+.runs-feed-pane {
+  contain: layout style;
+}
+
+.active-run-pane {
+  contain: layout style;
+}
+
+.diff-output-box {
+  contain: paint layout;
+}
+
+.ast-guarantee-card {
+  contain: layout style;
+}
+
+.feed-item {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 115px;
+}
+
+.diff-file-chunk {
+  contain: layout style paint;
+}
+

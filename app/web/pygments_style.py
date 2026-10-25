@@ -49,15 +49,31 @@ class CouchPilotStyle(Style):
 
 
 def highlight_diff(diff_text: str) -> str:
-    """Render unified diff string to syntax-highlighted HTML."""
+    """Render unified diff string to syntax-highlighted HTML, chunked by file for high-performance toggling."""
+    if not diff_text:
+        return ""
+    import re
     from pygments import highlight
+
     lexer = DiffLexer()
     formatter = HtmlFormatter(
         style=CouchPilotStyle,
         noclasses=True,
-        nowrap=False,
+        nowrap=True,
     )
-    return highlight(diff_text, lexer, formatter)
+    raw_chunks = re.split(r"(?=(?:^diff --git|^--- a/))", diff_text, flags=re.MULTILINE)
+    html_chunks = []
+    for chunk in raw_chunks:
+        if not chunk.strip():
+            continue
+        match = re.search(r"(?:^diff --git a/\S+ b/(\S+)|^--- a/(\S+)|^\+\+\+ b/(\S+))", chunk, re.MULTILINE)
+        file_path = match.group(1) or match.group(2) or match.group(3) if match else "default"
+        highlighted = highlight(chunk, lexer, formatter)
+        html_chunks.append(f'<div class="diff-file-chunk" data-file-path="{file_path}">{highlighted}</div>')
+
+    if not html_chunks:
+        return f'<div class="diff-file-chunk" data-file-path="default">{highlight(diff_text, lexer, formatter)}</div>'
+    return "".join(html_chunks)
 
 
 def highlight_python(code_text: str) -> str:

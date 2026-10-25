@@ -5,16 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}CouchPilot Review Dashboard{% endblock %}</title>
 
-  <!-- Google Fonts: Outfit (UI Sans, weights up to 900) & JetBrains Mono (Code/Metrics) -->
+  <!-- Performance: Resource Hints & Preconnects -->
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Preload Critical Stylesheet -->
+  <link rel="preload" href="/static/css/style.css" as="style">
+
+  <!-- Google Fonts: Essential weights only (Outfit: 500,600,700,800; JetBrains Mono: 500,700) -->
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- Core Stylesheet: Bold High-Contrast Neo-Brutalism -->
   <link rel="stylesheet" href="/static/css/style.css">
-
-  <!-- Lucide Icons CDN (pinned & deferred) -->
-  <script defer src="https://unpkg.com/lucide@0.460.0"></script>
 
   {% block head %}{% endblock %}
 </head>
@@ -115,7 +119,10 @@
         Executing sample repository housekeeping with strict AST equivalence validation and review branch isolation.
       </p>
 
-      <ul class="stepper-list">
+      <ul class="stepper-list" id="stepper-list">
+        <div class="stepper-track" aria-hidden="true">
+          <div class="stepper-progress" id="stepper-progress-fill"></div>
+        </div>
         <li id="step-scan" class="stepper-item" data-step-num="1">
           <div class="stepper-icon-box">1</div>
           <div class="stepper-content">
@@ -153,6 +160,6 @@
     window.SENTRY_HOST = "{{ sentry_host | default('sentry.io') }}";
     window.SENTRY_ORG = "{{ sentry_org | default('couchpilot') }}";
   </script>
-  <script src="/static/js/app.js"></script>
+  <script defer src="/static/js/app.js"></script>
 </body>
 </html>
