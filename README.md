@@ -10,7 +10,7 @@ CouchPilot automates maintenance on Python repositories without risking regressi
 ## Live Demo
 
 - Live Workbench: [https://couchpilot-dashboard.onrender.com](https://couchpilot-dashboard.onrender.com)
-- Demo Video: [TODO: https://youtu.be/placeholder](TODO: https://youtu.be/placeholder)
+- Demo Video: [https://youtu.be/-AYGjQud_X8](https://youtu.be/-AYGjQud_X8)
 
 ![CouchPilot Overview Dashboard](docs/screenshots/overview.png)
 *TODO: docs/screenshots/overview.png - Overview metrics bar and recent run feed*
