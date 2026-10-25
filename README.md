@@ -123,7 +123,7 @@ week3/
 ### 1. Environment Setup
 
 ```bash
-git clone <TODO: repo_url>
+git clone https://github.com/Rish-51/CouchPilot.git
 cd week3
 python -m venv venv
 ```
